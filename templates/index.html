@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Client Requirements & Design Manager</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="header">
+        <h1><a style="color: #648fdb; font-size: 30px; text-decoration: none;" href="/">Client Requirements & Design Manager</a></h1>
+</div>
+
+
+<div class="table1">
+    <table>
+        <tr>
+            <th>Client</th>
+            <th>Status</th>
+            <th>Options</th>
+        </tr>
+    {% for clientName, clientStatus, clientId in clientDetails %}
+        <tr>
+            <td class="table1Data"><label for="{{ clientName }}"><a href="/client/{{clientId}}">{{ clientName }}</a></label></td>
+            <td class="table1Data"><label for="{{ clientStatus }}">{{ clientStatus }}</label></td>
+            <td class="table1Data"><a href="/deleteClient/{{clientId}}">Delete</a></td>
+        </tr>
+    {% endfor %}
+        <tr>
+            <td class="table1Data"><a href="/NewClient">Add new client</a></td>
+        </tr>
+    </table>
+</div>
+
+
+
+{% endblock %}

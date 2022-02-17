@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Client Requirements & Design Manager</title>
+{% endblock %}
+
+{% block body %}
+<div class="header">
+    <h1><a style="color: #648fdb; font-size: 30px; text-decoration: none;" href="/">Client Requirements & Design Manager</a></h1>
+</div>
+
+<div class="table2">
+    <form action="/UpdateClient/{{clientId}}" method="POST">
+    <table>
+        <tr>
+            <th>Client Name</th>
+            <th>Client Status</th>
+            <th>Primary Technical Manager</th>
+            <th style="padding-right:50px; padding-left:50px"> Secondary Technical Manager</th>
+        </tr>
+        <tr>
+            <td class="table1Data"><input type="text" name="clientName" id="clientName" value="{{ clientName }}"></td>
+            <td>
+                <select name="clientStatus" id="clientStatus" style= "width: 150px";>
+                {% if clientStatus == 'Initiating' %}
+                    <option value="Initiating" selected>Initiating</option>
+                    <option value="Designing">Designing</option>
+                    <option value="Implementing">Implementing</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Live">Live</option>
+                {% elif clientStatus == 'Designing' %}
+                    <option value="Initiating">Initiating</option>
+                    <option value="Designing" selected>Designing</option>
+                    <option value="Implementing">Implementing</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Live">Live</option>
+                {% elif clientStatus == 'Implementing' %}
+                    <option value="Initiating">Initiating</option>
+                    <option value="Designing">Designing</option>
+                    <option value="Implementing" selected>Implementing</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Live">Live</option>
+                {% elif clientStatus == 'Testing' %}
+                    <option value="Initiating">Initiating</option>
+                    <option value="Designing">Designing</option>
+                    <option value="Implementing">Implementing</option>
+                    <option value="Testing" selected>Testing</option>
+                    <option value="Live">Live</option>
+                {% elif clientStatus == 'Live' %}
+                    <option value="Initiating">Initiating</option>
+                    <option value="Designing">Designing</option>
+                    <option value="Implementing">Implementing</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Live" selected>Live</option>
+                {% else %}
+                    <option value="Initiating">Initiating</option>
+                    <option value="Designing">Designing</option>
+                    <option value="Implementing">Implementing</option>
+                    <option value="Testing">Testing</option>
+                    <option value="Live">Live</option>
+                {% endif %}
+                </select>
+            </td>
+            <td class="table1Data"><input type="text" name="PTechnicalManager" id="PTechnicalManager" value="{{ pManager }}"></td>
+            <td class="table1Data"><input type="text" name="STechnicalManager" id="STechnicalManager" value="{{ sManager }}"></td>
+        </tr>
+    </table>
+        <input type="submit" value="Update">
+    </form>
+    <form action="/client/{{clientId}}" method="GET">
+        <input type="submit" value="Go Back">
+    </form>
+</div>
+{% endblock %}
+
+
+
+

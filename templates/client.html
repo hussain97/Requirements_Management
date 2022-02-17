@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Client Requirements & Design Manager</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="header">
+        <h1><a style="color: #648fdb; font-size: 30px; text-decoration: none;" href="/">Client Requirements & Design Manager</a></h1>
+        <h2>{{ clientName }}</h2>
+        <h2>Status: {{ clientStatus }}</h2>
+    <div style="top: 200px; width: 300px; position:absolute; top: 30px;">
+        <p style="text-align: left;">Primary Technical Account Manager:<br />{{ pManager }}</p>
+        <p style="text-align: left;">Secondary Technical Account Manager:<br />{{ sManager }}</p>
+    </div>
+    <div style="top: 200px; width: 300px; top: 100px; right:10px;">
+        <p style="text-align: left;"><a style="color: #648fdb; font-size: 30px; text-decoration: none;" href="/Settings/{{clientId}}">Settings</a></p>
+    </div>
+</div>
+
+<div class="content">
+    <h2>Requirements List</h2>
+    <h4>Tick the requirements you would like for your workflow.</h4>
+        <form action="/requirements/{{clientId}}" method="POST">
+            <table>
+                <tr>
+                    <th>Setup</th>
+                    <th>Check</th>
+                </tr>
+                <tr>
+                    <td><label for="Format">Would you like the response to be in "XML"? (if not selected, defaults to "JSON")</label></td>
+                    <td><input type="checkbox" name="Format" id="Format" value="2"><br></td>
+                </tr>
+                <tr>
+                    <td><label for="Batch">Would you like to have the ability to upload a batch?</label></td>
+                    <td><input type="checkbox" name="Batch" id="Batch" value="1"><br></td>
+                </tr>
+            </table>
+
+        <h2>Requirements</h2>
+        {% for numberOFCategories in numberOFCategories %}
+        <div class="accordion">
+            <button type="button" class="accordion__button">{{ numberOFCategories }} Requirements</button>
+            <div class="accordion__content">
+                <input type="checkbox" name="{{ numberOFCategories }}SelectAll" style = "margin: 20px; left:80px; top:0px;" onClick='selectAll({{ numberOFCategories | tojson}})' />Select All<br/>
+                <table style = "padding: 20px;">
+                    <tr>
+                        <th>Requirement</th>
+                        <th>Sub Category 1</th>
+                        <th>Sub Category 2</th>
+                        <th>Description</th>
+                        <th>Check</th>
+                    </tr>
+                {% for field in fields %}
+                {% if field.2 == numberOFCategories %}
+                    <tr>
+                        <td><label for="{{ field.1 }}">{{ field.1 }}</label></td>
+                        <td><label for="{{ field.3 }}">{{ field.3 }}</label></td>
+                        <td><label for="{{ field.4 }}">{{ field.4 }}</label></td>
+                        <td><label for="{{ field.9 }}">{{ field.9 }}</label></td>
+                        <td><input type="checkbox" name="{{ field.0 }}" id="{{ field.2 }}" value="{{ field.0 }}"></td>
+                    </tr>
+                {% endif %}
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+
+            <input type="submit" value="Submit Requirements" style = "margin: 20px;">
+        </form>
+    
+    <h2>Selected Requirements</h2>
+    <div class="accordion">
+        <button type="button" class="accordion__button">Expand to view selected requirements and to delete requirements</button>
+        <div class="accordion__content">
+    
+    
+        {% if selectedfields|length < 1 %}
+        <h4>There are no requirements. Add the requirements!</h4>
+        {% else %}
+    
+        <table>
+            <tr>
+                <th>Selected Requirements</th>
+                <th>Actions</th>
+            </tr>
+            {% for selectedfield in selectedfields %}
+                <tr>
+                    <td>{{ selectedfield.5 }}</td>
+                    <td>
+                        <a href="/delete/{{selectedfield.0}}/{{clientId}}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+        </div>
+    </div>
+
+<div class="responseSection">
+        <h1 style = "color: #648fdb; font-size: 30px; margin: 20px;">Response</h1>
+        <pre><p style = "margin: 20px;" >{{ clientResponse }}</p></pre>
+</div>
+
+
+<script>
+    document.querySelectorAll('.accordion__button').forEach(button => {
+        button.addEventListener('click', () => {
+            const accordionContent = button.nextElementSibling;
+
+            button.classList.toggle('accordion__button--active');
+
+            if (button.classList.contains('accordion__button--active')) {
+                accordionContent.style.maxHeight = accordionContent.scrollHeight + 'px';
+            } else{
+                accordionContent.style.maxHeight = 0;
+            }
+        });
+    });
+</script>
+<script language="JavaScript">
+    function selectAll(category) { //Following code queries all the checkboxes that match the category. The code then checks all of the checkboxes. 
+        var querySetup = "input[id=" + '"' + String(category) + '"]'
+        const cbs = document.querySelectorAll(querySetup);
+        var querySetup2 = "input[name=" + String(category) + 'SelectAll]'
+        console.log(querySetup2);
+        var selectAllVar = document.querySelectorAll(querySetup2);
+        console.log(selectAllVar);
+        console.log(selectAllVar[0]);
+        console.log(selectAllVar[0].checked);
+        if (selectAllVar[0].checked == true) {
+            for(var i=0, n=cbs.length;i<n;i++) {
+                cbs[i].checked = true;
+            }
+        } else{
+            for(var i=0, n=cbs.length;i<n;i++) {
+                cbs[i].checked = false;
+            }
+        }
+    }
+</script>
+      
+</div>
+{% endblock %}

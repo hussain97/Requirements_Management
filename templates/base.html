@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <style>.header {
+        padding: 10px;
+        text-align: center;
+        background: #212224;
+        color: white;
+      }</style>
+      
+    <style>.table1 {
+        position: absolute;
+        right: 550px;
+        margin: auto;
+        padding: 30px;
+        text-align: center;
+        font-size: 25px;
+        text-decoration: none;
+      }</style>
+      
+      <style>.table2 {
+        position: absolute;
+        right: 250px;
+        margin: auto;
+        padding: 30px;
+        text-align: center;
+        font-size: 25px;
+      }</style>
+
+    <style>.table1Data {
+        color: #648fdb;
+        padding: 10px 0;
+        width: 125px;
+      }</style>
+
+    <style>.responseSection {
+        margin: 20px;
+        color: #648fdb;
+        border-style: solid;
+        padding: 10px 0;
+      }</style>
+
+    <style>.accordion__button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      background: #333333;
+      color: #ffffff;
+      text-align: left;
+      transition: background 0.2s;
+    }
+
+    .accordion__button::after {
+      content: '\25be';
+      float: right;
+      transform: scale(1.5);
+    }
+
+    .accordion__button--active { background: #555555 }
+    .accordion__button--active::after { content: '\25b4' }
+
+    .accordion__content { 
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.2s;
+
+      padding: 0 15px;
+      font-family: sans-serif;
+      background: #eeeeee;
+      }
+    
+    </style>
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% block body %}{% endblock %}
+</body>
+</html>
